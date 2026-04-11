@@ -1,6 +1,6 @@
 歡迎來到我的個人履歷網站專案！
 
-您可以點擊此連結造訪上線的網站： https://karlaaaaa1212.github.io/Portfolio-Website/
+您可以點擊此連結 造訪上線的網站： https://karlaaaaa1212.github.io/Portfolio-Website/
 
 ## 關於此專案
 
