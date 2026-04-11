@@ -1,17 +1,19 @@
-Welcome to my personal portfolio repository! This website showcases my journey in software development, exploring the intersections of Machine Learning, Quantitative Finance, and System Engineering. 
+歡迎來到我的個人履歷網站專案！
 
-You can visit the live website here: https://karlaaaaa1212.github.io/Portfolio-Website/
+您可以點擊此連結造訪上線的網站：[這裡請保留你的網址]
 
-## 💡 About This Project
-This project is a responsive, interactive personal portfolio built completely from scratch without relying on heavy front-end frameworks. It serves as a central hub for my background, academic journey at National Yang Ming Chiao Tung University (NYCU), technical skills, and project showcases.
+## 關於此專案
 
-## ✨ Key Features
-- **Custom UI Animations:** Includes a dynamic typewriter effect and seamless scroll-triggered fade-ins.
-- **Interactive RGB Glitch Cursor:** A custom-built comet tail cursor effect with RGB color-shifting, implemented entirely in Vanilla JavaScript.
-- **Dynamic Portfolio Gallery:** Tab-based filtering for projects, certificates, and personal traits.
-- **Responsive Design:** Adaptive layout with custom background layer transitions.
+這是一個從零開始打造的互動性的個人網站。本網站整合了我的個人背景、在國立陽明交通大學 (NYCU) 的學術歷程、技術能力以及各項專案成果展示。
 
-## 🛠️ Tech Stack
-- **Structure:** HTML5
-- **Styling:** CSS3 (Custom animations, Flexbox/Grid layouts, Glassmorphism UI)
-- **Logic & Interactivity:** Vanilla JavaScript (DOM manipulation, Intersection Observer API, requestAnimationFrame)
+## 核心功能
+
+* 客製化介面動畫：包含動態打字機特效，以及流暢的滾動觸發淡入效果。
+* 互動式 RGB 游標：完全使用原生 JavaScript (Vanilla JS) 實作的客製化彗星尾游標，並帶有 RGB 色彩偏移特效。
+* 動態作品集展示區：提供基於分頁標籤的篩選功能，可快速切換瀏覽專案、證照與個人特質。
+
+## 技術堆疊
+
+* 網頁結構：HTML
+* 樣式設計：CSS
+* 邏輯與互動：原生 JavaScript 
