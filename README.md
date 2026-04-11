@@ -1,6 +1,6 @@
 Welcome to my personal portfolio repository! This website showcases my journey in software development, exploring the intersections of Machine Learning, Quantitative Finance, and System Engineering. 
 
-You can visit the live website here: 
+You can visit the live website here: https://karlaaaaa1212.github.io/Portfolio-Website/
 
 ## 💡 About This Project
 This project is a responsive, interactive personal portfolio built completely from scratch without relying on heavy front-end frameworks. It serves as a central hub for my background, academic journey at National Yang Ming Chiao Tung University (NYCU), technical skills, and project showcases.
