@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Account</title>
+    <style>
+        /* 全域與背景設定 */
+        body { 
+            font-family: Arial, sans-serif; 
+            background-image: linear-gradient(135deg, #090b29 0%, #1f4779 100%);
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 40px 0;
+            box-sizing: border-box;
+        }
+
+        /* 表單外框 (毛玻璃效果) */
+        .form-container { 
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid #00ffff;
+            border-radius: 16px;
+            padding: 40px 30px; 
+            width: 340px; 
+            box-shadow: 0 4px 15px rgba(0, 255, 255, 0.2);
+            text-align: center;
+        }
+
+        /* 標題 RGB 色差風格 */
+        .form-container h2 {
+            font-size: 32px;
+            margin-top: 0;
+            margin-bottom: 25px;
+            font-weight: bold;
+            color: #fff;
+            text-shadow: -2px 0 #ff00ff, 2px 0 #00ffff;
+        }
+
+        /* 欄位容器 */
+        .field-container {
+            position: relative;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        /* 輸入框標籤 */
+        .form-container label {
+            display: block;
+            text-align: left;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #add7ff;
+            font-weight: bold;
+        }
+
+        .form-container .required::before {
+            content: "* ";
+            color: #ff4d4d;
+            margin-right: 4px;
+            font-size: 16px;
+            vertical-align: middle;
+        }
+
+        /* 🛠️ 修正點：加入 type="date"，並將基礎邊框改為 3px，微調 padding 防止抖動 */
+        .form-container input[type="text"],
+        .form-container input[type="email"],
+        .form-container input[type="password"],
+        .form-container input[type="date"] { 
+            width: 100%; 
+            box-sizing: border-box;
+            padding: 10px 13px; /* 配合 3px 邊框縮減 padding */
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 3px solid #00ffff; /* 統一為 3px 粗框 */
+            border-radius: 8px;
+            color: #ffffff;
+            font-size: 15px;
+            transition: all 0.3s ease;
+        }
+
+        /* 讓日期選擇器的 icon 與文字適應暗色背景 */
+        .form-container input[type="date"] {
+            color-scheme: dark;
+        }
+
+        /* 格子被選取時的邊線：青色改成粗白框 */
+        .form-container input:focus {
+            outline: none;
+            border-color: #ffffff !important;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.6) !important;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* 性別點選按鈕組合風格 */
+        .gender-group {
+            display: flex;
+            gap: 10px;
+            justify-content: space-between;
+        }
+
+        .gender-option {
+            flex: 1;
+            cursor: pointer;
+            position: relative;
+        }
+
+        /* 隱藏原生單選圓圈 */
+        .gender-option input[type="radio"] {
+            display: none;
+        }
+
+        /* 自定義按鈕外觀 (基礎為 3px 粗邊框) */
+        .gender-option span {
+            display: block;
+            text-align: center;
+            padding: 9px 0; 
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 3px solid #00ffff;
+            border-radius: 8px;
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: bold;
+            transition: all 0.2s ease;
+            box-sizing: border-box;
+        }
+
+        /* Gender 懸停效果：粗白框 + 白色霓虹發光 */
+        .gender-option:hover span {
+            border-color: #ffffff;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+            background-color: rgba(255, 255, 255, 0.08);
+        }
+
+        /* Gender 點選中效果：整個變成青色，文字變深色維持高對比 */
+        .gender-option input[type="radio"]:checked + span {
+            background-color: #00ffff;
+            border-color: #00ffff;
+            color: #090b29;
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.8);
+        }
+        
+        /* Gender 已點選但滑鼠又移上去時：保持青色背景但框線變白 */
+        .gender-option input[type="radio"]:checked:hover + span {
+            border-color: #ffffff;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+        }
+
+        /* 實時提示彈窗設定 */
+        .tooltip {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background-color: #000000; 
+            border: 1px solid #ffffff;
+            border-radius: 8px;
+            padding: 12px;
+            margin-top: 5px;
+            z-index: 100;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+            box-sizing: border-box;
+        }
+
+        .form-container input:focus ~ .tooltip {
+            display: block;
+        }
+
+        .tooltip ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .tooltip li {
+            font-size: 12.5px;
+            margin-bottom: 6px;
+            color: #ffffff; 
+            display: flex;
+            align-items: center;
+        }
+
+        .tooltip li:last-child {
+            margin-bottom: 0;
+        }
+
+        .tooltip li::before {
+            margin-right: 8px;
+            font-weight: bold;
+            display: inline-block;
+            width: 14px;
+        }
+
+        .tooltip li.invalid::before {
+            content: "✘";
+            color: #ff4d4d; 
+        }
+
+        .tooltip li.valid::before {
+            content: "✔";
+            color: #00ff00; 
+        }
+
+        /* 底部註冊按鈕 */
+        .form-container button { 
+            width: 100%; 
+            padding: 10px; 
+            background-color: #090b29;
+            color: #ffffff;
+            border: 3px solid #00ffff;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer; 
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 6px rgba(0, 255, 255, 0.3);
+            margin-top: 15px;
+            box-sizing: border-box;
+        }
+
+        .form-container button:hover {
+            background-color: #090b29;
+            border-color: #ffffff;
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.6);
+            transform: translateY(-2px);
+            color: #ffffff;
+        }
+
+        .form-container button:active {
+            background-color: #00ffff;
+            border-color: #00ffff;
+            color: #090b29;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.9);
+            transform: translateY(1px); 
+        }
+
+        .form-container p {
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .form-container a {
+            color: #00ffff;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .form-container a:hover {
+            color: #ff00ff;
+        }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <h2>Create Account</h2>
+    <form action="register.php" method="POST" id="registerForm">
+        
+        <div class="field-container">
+            <label class="required">Username</label>
+            <input type="text" name="username" id="username" placeholder="" required autocomplete="off">
+            <div class="tooltip">
+                <ul>
+                    <li id="u-rules" class="invalid">Alphabet characters and numbers only</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="field-container">
+            <label class="required">Email</label>
+            <input type="email" name="email" id="email" placeholder="" required autocomplete="off">
+        </div>
+        
+        <div class="field-container">
+            <label class="required">Password</label>
+            <input type="password" name="password" id="password" placeholder="" required autocomplete="off">
+            <div class="tooltip">
+                <ul>
+                    <li id="p-length" class="invalid">At least 8 characters</li>
+                    <li id="p-lowercase" class="invalid">Contains lowercase letter</li>
+                    <li id="p-uppercase" class="invalid">Contains uppercase letter</li>
+                    <li id="p-number" class="invalid">Contains number</li>
+                    <li id="p-special" class="invalid">Contains special character</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="field-container">
+            <label class="required">Confirm Password</label>
+            <input type="password" name="confirm_password" id="confirm_password" placeholder="" required autocomplete="off">
+            <div class="tooltip">
+                <ul>
+                    <li id="cp-match" class="invalid">Passwords must match</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="field-container">
+            <label>Birthday</label>
+            <input type="text" name="birthday" id="birthday" placeholder="" onfocus="(this.type='date')" onblur="if(!this.value)this.type='text'">
+        </div>
+
+        <div class="field-container">
+            <label>Gender</label>
+            <div class="gender-group">
+                <label class="gender-option">
+                    <input type="radio" name="gender" value="Male">
+                    <span>Male</span>
+                </label>
+                <label class="gender-option">
+                    <input type="radio" name="gender" value="Female">
+                    <span>Female</span>
+                </label>
+                <label class="gender-option">
+                    <input type="radio" name="gender" value="Other">
+                    <span>Other</span>
+                </label>
+            </div>
+        </div>
+
+        <div class="field-container">
+            <label>Nickname</label>
+            <input type="text" name="nickname" id="nickname" placeholder="" autocomplete="off">
+        </div>
+        
+        <button type="submit">Create Account</button>
+        
+    </form>
+    <p>Already have an account? <a href="login.html">Login here</a></p>
+</div>
+
+<script>
+    const usernameInput = document.getElementById('username');
+    const passwordInput = document.getElementById('password');
+    const confirmInput = document.getElementById('confirm_password');
+    const form = document.getElementById('registerForm');
+
+    // 🛠️ 新增：限制生日最大值為今天 (只能選擇今天或以前的日期)
+    const birthdayInput = document.getElementById('birthday');
+    // 取得當下的日期，並格式化為 YYYY-MM-DD
+    const today = new Date().toISOString().split('T')[0]; 
+    // 設定 input 的 max 屬性
+    birthdayInput.setAttribute('max', today)
+
+
+    // Username 實時動態驗證 (僅允許英數)
+    usernameInput.addEventListener('input', () => {
+        const val = usernameInput.value;
+        const uRules = document.getElementById('u-rules');
+        if (/^[a-zA-Z0-9]+$/.test(val) && val.length > 0) {
+            uRules.className = 'valid';
+        } else {
+            uRules.className = 'invalid';
+        }
+    });
+
+    // Password 實時動態驗證
+    passwordInput.addEventListener('input', () => {
+        const val = passwordInput.value;
+        
+        document.getElementById('p-length').className = val.length >= 8 ? 'valid' : 'invalid';
+        document.getElementById('p-lowercase').className = /[a-z]/.test(val) ? 'valid' : 'invalid';
+        document.getElementById('p-uppercase').className = /[A-Z]/.test(val) ? 'valid' : 'invalid';
+        document.getElementById('p-number').className = /[0-9]/.test(val) ? 'valid' : 'invalid';
+        document.getElementById('p-special').className = /[^a-zA-Z0-9]/.test(val) ? 'valid' : 'invalid';
+        
+        validateConfirm();
+    });
+
+    // Confirm Password 實時動態驗證監聽
+    confirmInput.addEventListener('input', validateConfirm);
+
+    // 驗證密碼是否一致的獨立函式
+    function validateConfirm() {
+        const pVal = passwordInput.value;
+        const cVal = confirmInput.value;
+        const cpMatch = document.getElementById('cp-match');
+
+        if (pVal === cVal && cVal.length > 0) {
+            cpMatch.className = 'valid';
+        } else {
+            cpMatch.className = 'invalid';
+        }
+    }
+
+    // 表單提交時的嚴格阻擋驗證
+    form.addEventListener('submit', (e) => {
+        const uVal = usernameInput.value;
+        const pVal = passwordInput.value;
+        const cVal = confirmInput.value;
+
+        const isUsernameValid = /^[a-zA-Z0-9]+$/.test(uVal);
+        const isPasswordValid = pVal.length >= 8 && 
+                                /[a-z]/.test(pVal) &&
+                                /[A-Z]/.test(pVal) && 
+                                /[0-9]/.test(pVal) && 
+                                /[^a-zA-Z0-9]/.test(pVal);
+        const isConfirmValid = (pVal === cVal) && cVal.length > 0;
+
+        if (!isUsernameValid) {
+            e.preventDefault();
+            alert('Registration Failed: Username must contain letters or numbers only.');
+            usernameInput.focus();
+            return;
+        }
+
+        if (!isPasswordValid) {
+            e.preventDefault();
+            alert('Registration Failed: Password does not meet the safety requirements.');
+            passwordInput.focus();
+            return;
+        }
+
+        if (!isConfirmValid) {
+            e.preventDefault();
+            alert('Registration Failed: Passwords do not match!');
+            confirmInput.focus();
+            return;
+        }
+    });
+</script>
+</body>
+</html>

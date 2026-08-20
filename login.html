@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <title>會員登入</title>
+    <style>
+        /* 全域與背景設定 */
+        body { 
+            font-family: Arial, sans-serif; 
+            background-image: linear-gradient(135deg, #090b29 0%, #1f4779 100%);
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        /* 表單外框 (毛玻璃效果) */
+        .form-container { 
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid #00ffff;
+            border-radius: 16px;
+            padding: 40px 30px; 
+            width: 320px; 
+            box-shadow: 0 4px 15px rgba(0, 255, 255, 0.2);
+            text-align: center;
+        }
+
+        /* 標題 RGB 色差風格 */
+        .form-container h2 {
+            font-size: 32px;
+            margin-top: 0;
+            margin-bottom: 25px;
+            font-weight: bold;
+            color: #fff;
+            text-shadow: -2px 0 #ff00ff, 2px 0 #00ffff;
+        }
+
+        /* 提示訊息 (修改密碼頁面用) */
+        .form-container p {
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        /* 輸入框標籤 */
+        .form-container label {
+            display: block;
+            text-align: left;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #add7ff;
+            font-weight: bold;
+        }
+
+        /* 🛠️ 輸入框設計：改為 3px 粗框，微調 padding */
+        .form-container input { 
+            width: 100%; 
+            box-sizing: border-box;
+            margin-bottom: 20px; 
+            padding: 10px 13px; 
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 3px solid #00ffff;
+            border-radius: 8px;
+            color: #ffffff;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        /* 🛠️ 輸入框點擊時的光暈：同步 register.html 的白色粗框 */
+        .form-container input:focus {
+            outline: none;
+            border-color: #ffffff !important;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.6) !important;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* 🛠️ 按鈕設計：改為 3px 粗框，微調 padding */
+        .form-container button { 
+            width: 100%; 
+            padding: 10px; 
+            background-color: #090b29;
+            color: #ffffff;
+            border: 3px solid #00ffff;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer; 
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 6px rgba(0, 255, 255, 0.3);
+            margin-top: 10px;
+            box-sizing: border-box;
+        }
+
+        /* 🛠️ 按鈕懸停效果：粗白框 + 白色霓虹發光 */
+        .form-container button:hover {
+            background-color: #090b29;
+            border-color: #ffffff;
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.6);
+            transform: translateY(-2px);
+            color: #ffffff;
+        }
+
+        /* 🛠️ 按鈕點擊瞬間 (Active) 效果：整個變成青色，文字變深色 */
+        .form-container button:active {
+            background-color: #00ffff;
+            border-color: #00ffff;
+            color: #090b29;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.9);
+            transform: translateY(1px); 
+        }
+
+        /* 底部連結設計 */
+        .form-container a {
+            color: #00ffff;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .form-container a:hover {
+            color: #ff00ff;
+        }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <h2>Log In</h2>
+    <form action="login.php" method="POST">
+        
+        <label>Username</label>
+        <input type="text" name="username" required>
+        
+        <label>Password</label>
+        <input type="password" name="password" required>
+        
+        <button type="submit">Log In</button>
+        
+    </form>
+    <p>Don't have an account? <a href="register.html">Register here</a></p>
+</div>
+
+</body>
+</html>
